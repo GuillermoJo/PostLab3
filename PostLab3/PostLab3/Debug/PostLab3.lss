@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\main.asm Mon Feb 23 22:54:47 2026
+AVRASM ver. 2.2.8  C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\main.asm Tue Feb 24 12:30:28 2026
 
 [builtin](2): Including file 'C:/Users\Guillermo\Programas\Microchip Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
 C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\main.asm(2): Including file 'C:/Users\Guillermo\Programas\Microchip Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328pdef.inc'
@@ -1032,7 +1032,7 @@ C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLa
                                  
                                  ; ***** END OF FILE ******************************************************
                                  
-                                 ; ? Definiciones ?
+                                 ; Definiciones
                                  .def zero      = r1       ; registro cero permanente
                                  .def dig_u     = r20      ; digito unidades
                                  .def dig_d     = r21      ; digito decenas
@@ -1042,7 +1042,7 @@ C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLa
                                  .org 0x0000
 000000 c01c                          rjmp inicio
                                  
-                                 ; ? Interrupcion Timer0 CompareA ?
+                                 ; Interrupcion Timer0 CompareA 
                                  .org OC0Aaddr
 00001c c01b                          rjmp isr_t0a
                                  
@@ -1054,7 +1054,7 @@ C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLa
                                  
 000021 2411                          clr zero
                                  
-                                 ; ? Configurar pines de salida ?
+                                 ; Configurar pines de salida 
 000022 ef0c                          ldi r16, 0b11111100
 000023 b90a                          out DDRD, r16
 000024 b81b                          out PORTD, zero
@@ -1065,15 +1065,15 @@ C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLa
 000027 9a22                          sbi DDRB, 2
 000028 b815                          out PORTB, zero
                                  
-                                 ; ? Limpiar variables ?
+                                 ; Limpiar variables 
 000029 2744                          clr dig_u
 00002a 2755                          clr dig_d
 00002b 2766                          clr ms_cnt
 00002c 2777                          clr mux_flag
                                  
-                                 ; ? Timer0 en modo CTC ?
-                                 ; Frecuencia base 16MHz / 1024 = 15625 Hz ? periodo 64us
-                                 ; OCR0A = 155  ?  (155+1) * 64us ? 9.984ms por interrupcion
+                                 ; Timer0 en modo CTC
+                                 ; Frecuencia base 16MHz / 1024 = 15625 Hz  periodo 64us
+                                 ; OCR0A = 155  (155+1) * 64us = 9.984ms por interrupcion
 00002d e002                          ldi r16, (1<<WGM01)
 00002e bd04                          out TCCR0A, r16
                                  
@@ -1087,7 +1087,7 @@ C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLa
 000033 e002                          ldi r16, (1<<OCIE0A)
 000034 9300 006e                     sts TIMSK0, r16
                                  
-000036 9478                          sei                    ; habilitar interrupciones globales
+000036 9478                          sei                    ; habilitar interrupciones
                                  
                                  bucle:
 000037 cfff                          rjmp bucle             ; todo ocurre en la ISR
@@ -1101,15 +1101,15 @@ C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLa
 00003c 93ef                          push r30
 00003d 93ff                          push r31
                                  
-                                 ; ? Apagar ambos displays ?
+                                 ; Apagar ambos displays 
 00003e 9829                          cbi PORTB, 1
 00003f 982a                          cbi PORTB, 2
                                  
-                                 ; ? Alternar flag de multiplexado ?
+                                 ; Alternar flag de multiplexado 
 000040 e001                          ldi r16, 0x01
 000041 2770                          eor mux_flag, r16
                                  
-                                 ; ? Seleccionar digito activo ?
+                                 ; Seleccionar digito activo 
 000042 2377                          tst mux_flag
 000043 f011                          breq mostrar_unidades
 000044 2f15                          mov r17, dig_d         ; mux_flag=1 decenas
@@ -1118,7 +1118,7 @@ C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLa
                                  mostrar_unidades:
 000046 2f14                          mov r17, dig_u         ; mux_flag=0 unidades
                                  
-                                 ; ? Leer patron de la tabla ?
+                                 ; Leer patron de la tabla 
                                  buscar_patron:
 000047 edee                          ldi r30, low(seg_tabla<<1)
 000048 e0f0                          ldi r31, high(seg_tabla<<1)
@@ -1126,14 +1126,14 @@ C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLa
 00004a 1df1                          adc r31, zero
 00004b 9124                          lpm r18, Z             ; r18 = patron 7seg del digito
                                  
-                                 ; ? Enviar segmentos a-f a PORTD ?
+                                 ; Enviar segmentos a-f a PORTD
 00004c 2f32                          mov r19, r18
 00004d 733f                          andi r19, 0x3F         ; conservar bits 0-5 (segmentos a-f)
 00004e 0f33                          lsl r19
 00004f 0f33                          lsl r19                ; desplazar a posicion PD2
 000050 b93b                          out PORTD, r19
                                  
-                                 ; ? Enviar segmento g a PB0 ?
+                                 ; Enviar segmento g a PB0
 000051 ff26                          sbrs r18, 6
 000052 c002                          rjmp seg_g_apagado
 000053 9a28                          sbi PORTB, 0
@@ -1142,7 +1142,7 @@ C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLa
                                  seg_g_apagado:
 000055 9828                          cbi PORTB, 0
                                  
-                                 ; ? Activar enable del display correspondiente ?
+                                 ; Activar enable del display correspondiente
                                  activar_enable:
 000056 2377                          tst mux_flag
 000057 f011                          breq en_unidades
@@ -1152,7 +1152,7 @@ C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLa
                                  en_unidades:
 00005a 9a29                          sbi PORTB, 1           ; unidades activas
                                  
-                                 ; ? Logica de conteo de tiempo ?
+                                 ; Logica de conteo de tiempo
                                  actualizar_tiempo:
 00005b 9563                          inc ms_cnt
 00005c 3664                          cpi ms_cnt, 100        ; 100 * ~10ms = ~1 segundo
@@ -1175,7 +1175,7 @@ C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLa
 000066 2755                          clr dig_d
 000067 2744                          clr dig_u
                                  
-                                 ; ? Restaurar contexto y retornar ?
+                                 ; Restaurar contexto y retornar
                                  fin_isr:
 000068 91ff                          pop r31
 000069 91ef                          pop r30
@@ -1185,17 +1185,14 @@ C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLa
 00006d 910f                          pop r16
 00006e 9518                          reti
                                  
-                                 ; ????????????????????????????????????????????????????????????
-                                 ; Tabla de patrones 7 segmentos (anodo comun)
-                                 ; bit0=a  bit1=b  bit2=c  bit3=d  bit4=e  bit5=f  bit6=g
-                                 ; ????????????????????????????????????????????????????????????
+                                 ; Tabla de patrones 7 segmentos
                                  seg_tabla:
 00006f 063f
 000070 4f5b
-000071 6d66                          .db 0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D
+000071 6d66
 000072 077d
 000073 6f7f
-000074 7c77                          .db 0x7D, 0x07, 0x7F, 0x6F, 0x77, 0x7C
+000074 7c77
 000075 5e39
 
 

@@ -1,7 +1,7 @@
 
 .include "m328pdef.inc"
 
-; ? Definiciones ?
+; Definiciones
 .def zero      = r1       ; registro cero permanente
 .def dig_u     = r20      ; digito unidades
 .def dig_d     = r21      ; digito decenas
@@ -11,7 +11,7 @@
 .org 0x0000
     rjmp inicio
 
-; ? Interrupcion Timer0 CompareA ?
+; Interrupcion Timer0 CompareA 
 .org OC0Aaddr
     rjmp isr_t0a
 
@@ -23,7 +23,7 @@ inicio:
 
     clr zero
 
-; ? Configurar pines de salida ?
+; Configurar pines de salida 
     ldi r16, 0b11111100
     out DDRD, r16
     out PORTD, zero
@@ -34,15 +34,15 @@ inicio:
     sbi DDRB, 2
     out PORTB, zero
 
-; ? Limpiar variables ?
+; Limpiar variables 
     clr dig_u
     clr dig_d
     clr ms_cnt
     clr mux_flag
 
-; ? Timer0 en modo CTC ?
-; Frecuencia base 16MHz / 1024 = 15625 Hz ? periodo 64us
-; OCR0A = 155  ?  (155+1) * 64us ? 9.984ms por interrupcion
+; Timer0 en modo CTC
+; Frecuencia base 16MHz / 1024 = 15625 Hz  periodo 64us
+; OCR0A = 155  (155+1) * 64us = 9.984ms por interrupcion
     ldi r16, (1<<WGM01)
     out TCCR0A, r16
 
@@ -56,7 +56,7 @@ inicio:
     ldi r16, (1<<OCIE0A)
     sts TIMSK0, r16
 
-    sei                    ; habilitar interrupciones globales
+    sei                    ; habilitar interrupciones
 
 bucle:
     rjmp bucle             ; todo ocurre en la ISR
@@ -70,15 +70,15 @@ isr_t0a:
     push r30
     push r31
 
-; ? Apagar ambos displays ?
+; Apagar ambos displays 
     cbi PORTB, 1
     cbi PORTB, 2
 
-; ? Alternar flag de multiplexado ?
+; Alternar flag de multiplexado 
     ldi r16, 0x01
     eor mux_flag, r16
 
-; ? Seleccionar digito activo ?
+; Seleccionar digito activo 
     tst mux_flag
     breq mostrar_unidades
     mov r17, dig_d         ; mux_flag=1 decenas
@@ -87,7 +87,7 @@ isr_t0a:
 mostrar_unidades:
     mov r17, dig_u         ; mux_flag=0 unidades
 
-; ? Leer patron de la tabla ?
+; Leer patron de la tabla 
 buscar_patron:
     ldi r30, low(seg_tabla<<1)
     ldi r31, high(seg_tabla<<1)
@@ -95,14 +95,14 @@ buscar_patron:
     adc r31, zero
     lpm r18, Z             ; r18 = patron 7seg del digito
 
-; ? Enviar segmentos a-f a PORTD ?
+; Enviar segmentos a-f a PORTD
     mov r19, r18
     andi r19, 0x3F         ; conservar bits 0-5 (segmentos a-f)
     lsl r19
     lsl r19                ; desplazar a posicion PD2
     out PORTD, r19
 
-; ? Enviar segmento g a PB0 ?
+; Enviar segmento g a PB0
     sbrs r18, 6
     rjmp seg_g_apagado
     sbi PORTB, 0
@@ -111,7 +111,7 @@ buscar_patron:
 seg_g_apagado:
     cbi PORTB, 0
 
-; ? Activar enable del display correspondiente ?
+; Activar enable del display correspondiente
 activar_enable:
     tst mux_flag
     breq en_unidades
@@ -121,7 +121,7 @@ activar_enable:
 en_unidades:
     sbi PORTB, 1           ; unidades activas
 
-; ? Logica de conteo de tiempo ?
+; Logica de conteo de tiempo
 actualizar_tiempo:
     inc ms_cnt
     cpi ms_cnt, 100        ; 100 * ~10ms = ~1 segundo
@@ -144,7 +144,7 @@ revisar_limite:
     clr dig_d
     clr dig_u
 
-; ? Restaurar contexto y retornar ?
+; Restaurar contexto y retornar
 fin_isr:
     pop r31
     pop r30
@@ -155,8 +155,5 @@ fin_isr:
     reti
 
 ; Tabla de patrones 7 segmentos
-; bit0=a  bit1=b  bit2=c  bit3=d  bit4=e  bit5=f  bit6=g
 seg_tabla:
-    .db 0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D
-    .db 0x7D, 0x07, 0x7F, 0x6F, 0x77, 0x7C
-    .db 0x39, 0x5E, 0x79, 0x71
+    .db 0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71
