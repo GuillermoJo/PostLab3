@@ -1,0 +1,39 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Users\Guillermo\Programas\Microchip Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>C:\Users\Guillermo\Programas\Microchip Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Users\Guillermo\Programas\Microchip Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
+  <FILE>C:/Users\Guillermo\Programas\Microchip Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\Debug\PostLab3.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>PostLab3.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>PostLab3.map</FILE>
+  <FILE>PostLab3.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <inicio><FILE>C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\main.asm</FILE><LINE>18</LINE></inicio>
+  <isr_t0a><FILE>C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\main.asm</FILE><LINE>65</LINE></isr_t0a>
+  <bucle><FILE>C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\main.asm</FILE><LINE>61</LINE></bucle>
+  <mostrar_unidades><FILE>C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\main.asm</FILE><LINE>87</LINE></mostrar_unidades>
+  <buscar_patron><FILE>C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\main.asm</FILE><LINE>91</LINE></buscar_patron>
+  <seg_tabla><FILE>C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\main.asm</FILE><LINE>161</LINE></seg_tabla>
+  <seg_g_apagado><FILE>C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\main.asm</FILE><LINE>111</LINE></seg_g_apagado>
+  <activar_enable><FILE>C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\main.asm</FILE><LINE>115</LINE></activar_enable>
+  <en_unidades><FILE>C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\main.asm</FILE><LINE>121</LINE></en_unidades>
+  <actualizar_tiempo><FILE>C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\main.asm</FILE><LINE>125</LINE></actualizar_tiempo>
+  <fin_isr><FILE>C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\main.asm</FILE><LINE>148</LINE></fin_isr>
+  <revisar_limite><FILE>C:\Users\Guillermo\UVG\Año 3 S1\Progra de micros\Progra\PostLab3\PostLab3\PostLab3\main.asm</FILE><LINE>141</LINE></revisar_limite>
+ </LABELS>
+</ASSEMBLER_INFO>
